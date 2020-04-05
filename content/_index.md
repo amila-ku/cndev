@@ -1,5 +1,6 @@
 ---
 hero:
-  heading: Novela, the simplest way to start publishing with Hugo and Forestry.
-  maxWidthPX: 652
+  heading: CNDEV, the place to read about cloud native development.
+  maxWidthPX: "652"
+
 ---
