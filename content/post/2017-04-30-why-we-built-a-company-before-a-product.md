@@ -40,15 +40,15 @@ Creating a basic operator scaffolding is easy with both frameworks, First step i
 
 Kubebuilder installation details is available [here](https://book.kubebuilder.io/quick-start.html#installation).
 
-Generating project
+Generating project:
 
-    kubebuilder init --domain cndev.io
+kubebuilder init --domain cndev.io
 
 domain should be a valid domain name you own
 
-Add a custom resource api
+Add a custom resource api:
 
-    kubebuilder create api --group loadtests --version v1 --kind LocustLoadTest
+kubebuilder create api --group loadtests --version v1 --kind LocustLoadTest
 
 group will be used as custom resource definition versioning along with version number, kind is used to set CRD kind.
 
@@ -62,17 +62,17 @@ to build and install the operator
 
 installation instructions is available [here](https://github.com/operator-framework/operator-sdk/blob/master/doc/user/install-operator-sdk.md).
 
-generating a project
+generating a project:
 
-    operator-sdk new podset-operator --type=go --repo=/projects/
+operator-sdk new podset-operator --type=go --repo=/projects/
 
-Add a custom resource
+Add a custom resource:
 
-    operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=PodSet
+operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=PodSet
 
-build the operator
+build the operator:
 
-    operator-sdk build quay.io/example/podset-operator
+operator-sdk build quay.io/example/podset-operator
 
 So far this was only about how to create the generate operator structure and add new api scaffolding in a project. I will explore more on implementing some functionality using both the frameworks in my next article.
 
