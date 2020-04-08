@@ -10,4 +10,6 @@ title = "Test"
 +++
 test
 
-    make test
+```
+make test
+```
