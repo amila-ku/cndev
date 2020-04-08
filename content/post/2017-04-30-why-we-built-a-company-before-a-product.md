@@ -54,9 +54,9 @@ group will be used as custom resource definition versioning along with version n
 
 to build and install the operator
 
-    make install
+make install
 
-    make run
+make run
 
 **OperatorSDK**
 
