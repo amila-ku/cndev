@@ -42,18 +42,16 @@ Kubebuilder installation details is available [here](https://book.kubebuilder.io
 
 Generating project:
 
-```
+```js live
 kubebuilder init --domain cndev.io
-
 ```
 
 domain should be a valid domain name you own
 
 Add a custom resource api:
 
-```
+```js live
 kubebuilder create api --group loadtests --version v1 --kind LocustLoadTest
-
 ```
 
 group will be used as custom resource definition versioning along with version number, kind is used to set CRD kind.
