@@ -58,7 +58,7 @@ group will be used as custom resource definition versioning along with version n
 
 to build and install the operator
 
-```
+```js live
 make install
 
 make run
@@ -71,23 +71,20 @@ installation instructions is available [here](https://github.com/operator-framew
 
 generating a project:
 
-```
+```js live
 operator-sdk new podset-operator --type=go --repo=/projects/
-
 ```
 
 Add a custom resource:
 
-```
+```js live
 operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=PodSet
-
 ```
 
 build the operator:
 
-```
+```js live
 operator-sdk build quay.io/example/podset-operator
-
 ```
 
 
