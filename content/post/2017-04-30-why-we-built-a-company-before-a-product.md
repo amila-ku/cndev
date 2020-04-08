@@ -7,8 +7,6 @@ timeToRead: 3
 authors: []
 
 ---
-![](https://miro.medium.com/max/794/1*7hJmglcnZMq9z8JC9TLS6Q.png =794x419)
-
 Deploying an application generally involves packaging as a container and creating kubernetes manifests for deployment, but even after being deployed someone would have to manage operations of the application. Kubernetes Operator is a way to package deploy and operate an application. Application in Kubernetes is managed using kubernetes api and kubectl, to efficiently manage stateful applications in kubernetes needs a way to extend the functionality of Kubernetes API cohesively. Operators are a runtime that manages these stateful applications by extending API functionality.
 
 There are multiple options available now to build an Operator, these frameworks can be grouped as below.
