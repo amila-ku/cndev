@@ -1,12 +1,10 @@
 ---
-title: Why we built a company before building a product and why it worked
-date: 2017-04-30
+title: Evaluate Options for Writing a Kubernetes Operator
+date: 2000-04-01T22:00:00+00:00
 hero: "/images/hero-6.jpg"
-excerpt: Creating a new website for Hopper, one of the top 4 most downloaded travel
-  apps in the U.S, along with Uber, Lyft.
+excerpt: Kubernetes Operator
 timeToRead: 3
-authors:
-- Thiago Costa
+authors: []
 
 ---
 ![](https://miro.medium.com/max/794/1*7hJmglcnZMq9z8JC9TLS6Q.png =794x419)
@@ -20,15 +18,15 @@ There are multiple options available now to build an Operator, these frameworks 
 * [kubebuilder](https://book.kubebuilder.io/)
 * [operator-sdk](https://coreos.com/operators/)
 
-[**meta-controller**](https://metacontroller.app/)
+**Other**
 
-[**rook-operatorkit**](https://github.com/rook/operator-kit)
-
-[**kopf**](https://github.com/zalando-incubator/kopf)
+* [**meta-controller**](https://metacontroller.app/)
+* [**rook-operatorkit**](https://github.com/rook/operator-kit)
+* [**kopf**](https://github.com/zalando-incubator/kopf)
 
 **client-go**
 
-[**sample-controller**](https://github.com/kubernetes/sample-controller)
+* [**sample-controller**](https://github.com/kubernetes/sample-controller)
 
 **shell-operator**
 
