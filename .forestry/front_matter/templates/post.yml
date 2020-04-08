@@ -41,4 +41,5 @@ fields:
   default: []
   label: Authors
 pages:
+- content/post/cross-account-dynnamodb-migration.md
 - content/post/test.md
