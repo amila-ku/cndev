@@ -1,157 +1,48 @@
 ---
-title: Why we built a company before building a product
+title: Infrastructure as Real Code
 date: 2019-04-30
-hero: /images/hero-6.jpg
-excerpt: this is my excerpt
+hero: "/images/hero-6.jpg"
+excerpt: Infrastructure as Real Code
 timeToRead: 3
-authors:
-  - Thiago Costa
+authors: []
 
 ---
+Infrastructure as Code (IaC) is being widely accepted as the way forward to implement infrastructure. It gives the ability to reuse, version and test infrastructure as with any regular code. This approach made a huge difference in how infrastructure is managed, the ability to troubleshoot and recover/recreate infrastructure, enable better quality testing, improved efficiency, and predictable deployment, lovers the cost for experimentation, more predictable infrastructure deployments and decreases the meantime for resolution. There are a plethora of tools available to properly implement infrastructure as code and most of them are now grown to be well-oiled frameworks for defining infrastructure. These tools can be categorized into two, procedural and declarative. _Terraform, CloudFormation, Saltstack,_ and _Puppet_ being declarative and _Ansible_ and _Chef_ having a procedural approach. Deciding on which one is best for the job is more based on personal preference but Terraform has been very prominent due to its support for multiple clouds, reusability.
 
-Hello, world! This is a demo post for `hugo-theme-novela`. Novela is built by the team at [Narative](https://narative.co), and built for everyone that loves the web.
+But when thinking about all this points to the question ‘Why do we have to learn yaml based syntax only for implementing Infrastructure as Code?’. And if you started with Cloudformation on AWS and you have to automate your infrastructure in Google Cloud or Azure you would have to learn YAML or JSON based new approach, Terraform would be a good alternative but hcl also has it’s limitations. What if we could define IaC in a regular programming language?.
 
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
+Luckily there are several options
 
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
+* [Pulumi](https://pulumi.io/quickstart/)
+* [Metaparticle](https://github.com/metaparticle-io?language=go)
+* [Ballerina](https://ballerina.io/)
 
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
+In this article, we will go through how to set up an AWS Lambda function using Pulumi.
 
-Do they have the resources necessary to execute on their ideas? Or are they constantly under pressure to pluck only the lowest-hanging fruit through bare minimum means, while putting their greatest ambitions on the back-burner?
+Installing
 
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
+    curl -fsSL https://get.pulumi.com | sh
 
-```js
-import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
-import styled from "@emotion/styled";
+verify installation
 
-import * as SocialIcons from "../../icons/social";
-import mediaqueries from "@styles/media";
+    pulumi version
 
-const icons = {
-  dribbble: SocialIcons.DribbbleIcon,
-  linkedin: SocialIcons.LinkedinIcon,
-  twitter: SocialIcons.TwitterIcon,
-  facebook: SocialIcons.FacebookIcon,
-  instagram: SocialIcons.InstagramIcon,
-  github: SocialIcons.GithubIcon,
-};
+create new project using template
 
-const socialQuery = graphql`
-  {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            social {
-              name
-              url
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+    pulumi new hello-aws-javascript — dir lambda-pulumi
 
-function SocialLinks({ fill = "#73737D" }: { fill: string }) {
-  const result = useStaticQuery(socialQuery);
-  const socialOptions = result.allSite.edges[0].node.siteMetadata.social;
+pulumi also provides a similar feature to ‘terraform plan’ with ‘pulumi preview’ command, let's create a project using the existing template
 
-  return (
-    <>
-      {socialOptions.map(option => {
-        const Icon = icons[option.name];
+    $ pulumi upwarning: A new version of Pulumi is available. To upgrade from version ‘0.16.14’ to ‘0.16.16’, run  $ curl -sSL https://get.pulumi.com | shor visit https://pulumi.io/install for manual instructions and release notes.Previewing update (dev):Type Name Plan  + pulumi:pulumi:Stack lambda-pulumi-dev create  + └─ aws:apigateway:x:API hello create  + ├─ aws:iam:Role hello4c238266 create  + ├─ aws:s3:Bucket hello create  + ├─ aws:iam:Role hello66382ec5 create  + ├─ aws:iam:RolePolicyAttachment hello4c238266 create  + ├─ aws:s3:BucketObject hello4c238266/index.html create  + ├─ aws:s3:BucketObject hello4c238266/favicon.png create  + ├─ aws:iam:RolePolicyAttachment hello66382ec5–32be53a2 create  + ├─ aws:lambda:Function hello66382ec5 create  + ├─ aws:apigateway:RestApi hello create  + ├─ aws:apigateway:Deployment hello create  + ├─ aws:lambda:Permission hello-f61e7551 create  + └─ aws:apigateway:Stage hello create  Resources: + 14 to createDo you want to perform this update? yesUpdating (dev):Type Name Status  + pulumi:pulumi:Stack lambda-pulumi-dev created  + └─ aws:apigateway:x:API hello created  + ├─ aws:iam:Role hello66382ec5 created  + ├─ aws:iam:Role hello4c238266 created  + ├─ aws:s3:Bucket hello created  + ├─ aws:iam:RolePolicyAttachment hello66382ec5–32be53a2 created  + ├─ aws:lambda:Function hello66382ec5 created  + ├─ aws:iam:RolePolicyAttachment hello4c238266 created  + ├─ aws:s3:BucketObject hello4c238266/index.html created  + ├─ aws:s3:BucketObject hello4c238266/favicon.png created  + ├─ aws:apigateway:RestApi hello created  + ├─ aws:apigateway:Deployment hello created  + ├─ aws:lambda:Permission hello-f61e7551 created  + └─ aws:apigateway:Stage hello created  Outputs: url: “https://t3tfwiiw1d.execute-api.us-east-1.amazonaws.com/stage/”Resources: + 14 createdDuration: 28sPermalink: https://app.pulumi.com/amila-ku/lambda-pulumi/dev/updates/3
 
-        return (
-          <SocialIconContainer
-            key={option.name}
-            target="_blank"
-            rel="noopener"
-            data-a11y="false"
-            aria-label={`Link to ${option.name}`}
-            href={option.url}
-          >
-            <Icon fill={fill} />
-          </SocialIconContainer>
-        );
-      })}
-    </>
-  );
-}
-```
+pulumi has a similar feel to how terraform is used to define and create infrastructure. Also it stores project configuration and outputs centrally in Pulumi Dashboard, this information can be shared among friedns easily with this approach.
 
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
+![](https://miro.medium.com/max/30/1*g5QH3tccjizT13eOV32yug.png?q=20 =1600x814)
 
-# This is a primary heading
+![](https://miro.medium.com/max/1600/1*g5QH3tccjizT13eOV32yug.png =1600x814)
 
-Do they have the resources necessary to execute on their ideas? Or are they constantly under pressure to pluck only the lowest-hanging fruit through bare minimum means, while putting their greatest ambitions on the back-burner?
+destroying the resources is also the same as with terraform and it will ask for confirmation before destroying the resources.
 
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
+    $ pulumi destroywarning: A new version of Pulumi is available. To upgrade from version ‘0.16.14’ to ‘0.16.16’, run  $ curl -sSL https://get.pulumi.com | shor visit https://pulumi.io/install for manual instructions and release notes.Previewing destroy (dev):Type Name Plan  — pulumi:pulumi:Stack lambda-pulumi-dev delete  — └─ aws:apigateway:x:API hello delete  — ├─ aws:apigateway:Stage hello delete  — ├─ aws:lambda:Permission hello-f61e7551 delete  — ├─ aws:apigateway:Deployment hello delete  — ├─ aws:apigateway:RestApi hello delete  — ├─ aws:iam:RolePolicyAttachment hello4c238266 delete  — ├─ aws:iam:RolePolicyAttachment hello66382ec5–32be53a2 delete  — ├─ aws:s3:BucketObject hello4c238266/index.html delete  — ├─ aws:lambda:Function hello66382ec5 delete  — ├─ aws:s3:BucketObject hello4c238266/favicon.png delete  — ├─ aws:s3:Bucket hello delete  — ├─ aws:iam:Role hello4c238266 delete  — └─ aws:iam:Role hello66382ec5 delete  Resources: — 14 to deleteDo you want to perform this destroy? yes> no details
 
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
-
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
-
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
-
-## This is a secondary heading
-
-```jsx
-import React from "react";
-import { ThemeProvider } from "theme-ui";
-import theme from "./theme";
-
-export default props => (
-  <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-);
-```
-
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
-
----
-
-Hyphens
-
----
-
-Asterisks
-
----
-
-Underscores
-
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
-
-Do they have the resources necessary to execute on their ideas? Or are they constantly under pressure to pluck only the lowest-hanging fruit through bare minimum means, while putting their greatest ambitions on the back-burner?
-
-Emphasis, aka italics, with _asterisks_ or _underscores_.
-
-Strong emphasis, aka bold, with **asterisks** or **underscores**.
-
-Combined emphasis with **asterisks and _underscores_**.
-
-Strikethrough uses two tildes. ~~Scratch this.~~
-
-1. First ordered list item
-2. Another item
-   ⋅⋅\* Unordered sub-list.
-3. Actual numbers don't matter, just that it's a number
-   ⋅⋅1. Ordered sub-list
-4. And another item.
-
-⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
-
-⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
-⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
-
-- Unordered list can use asterisks
-
-* Or minuses
-
-- Or pluses
+Pulumi seems like a great alternative to using terraform since we can use any programming language tha we are familiar, but i found terraform docs to be far superior and with pulumi it was not as easy. This might change with more time as Pulumi is relatively new.
