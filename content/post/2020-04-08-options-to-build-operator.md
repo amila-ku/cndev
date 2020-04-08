@@ -1,6 +1,6 @@
 ---
 title: Evaluate Options for Writing a Kubernetes Operator
-date: 2000-04-01T22:00:00+00:00
+date: 2020-03-01T23:00:00+00:00
 hero: "/images/1_7hJmglcnZMq9z8JC9TLS6Q.png"
 excerpt: Kubernetes Operator
 timeToRead: 3
