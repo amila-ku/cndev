@@ -1,7 +1,7 @@
 ---
 title: Evaluate Options for Writing a Kubernetes Operator
 date: 2000-04-01T22:00:00+00:00
-hero: "/images/hero-6.jpg"
+hero: "/images/1_7hJmglcnZMq9z8JC9TLS6Q.png"
 excerpt: Kubernetes Operator
 timeToRead: 3
 authors: []
@@ -56,7 +56,9 @@ group will be used as custom resource definition versioning along with version n
 
 to build and install the operator
 
-    make installmake run
+    make install
+
+    make run
 
 **OperatorSDK**
 
