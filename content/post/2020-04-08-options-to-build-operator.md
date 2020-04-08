@@ -42,21 +42,30 @@ Kubebuilder installation details is available [here](https://book.kubebuilder.io
 
 Generating project:
 
+```
 kubebuilder init --domain cndev.io
+
+```
 
 domain should be a valid domain name you own
 
 Add a custom resource api:
 
+```
 kubebuilder create api --group loadtests --version v1 --kind LocustLoadTest
+
+```
 
 group will be used as custom resource definition versioning along with version number, kind is used to set CRD kind.
 
 to build and install the operator
 
+```
 make install
 
 make run
+
+```
 
 **OperatorSDK**
 
@@ -64,82 +73,26 @@ installation instructions is available [here](https://github.com/operator-framew
 
 generating a project:
 
+```
 operator-sdk new podset-operator --type=go --repo=/projects/
+
+```
 
 Add a custom resource:
 
+```
 operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=PodSet
+
+```
 
 build the operator:
 
+```
 operator-sdk build quay.io/example/podset-operator
 
-So far this was only about how to create the generate operator structure and add new api scaffolding in a project. I will explore more on implementing some functionality using both the frameworks in my next article.
+```
 
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
 
-    import React from "react";
-    import { graphql, useStaticQuery } from "gatsby";
-    import styled from "@emotion/styled";
-    
-    import * as SocialIcons from "../../icons/social";
-    import mediaqueries from "@styles/media";
-    
-    const icons = {
-      dribbble: SocialIcons.DribbbleIcon,
-      linkedin: SocialIcons.LinkedinIcon,
-      twitter: SocialIcons.TwitterIcon,
-      facebook: SocialIcons.FacebookIcon,
-      instagram: SocialIcons.InstagramIcon,
-      github: SocialIcons.GithubIcon,
-    };
-    
-    const socialQuery = graphql`
-      {
-        allSite {
-          edges {
-            node {
-              siteMetadata {
-                social {
-                  name
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    `;
-    
-    function SocialLinks({ fill = "#73737D" }: { fill: string }) {
-      const result = useStaticQuery(socialQuery);
-      const socialOptions = result.allSite.edges[0].node.siteMetadata.social;
-    
-      return (
-        <>
-          {socialOptions.map(option => {
-            const Icon = icons[option.name];
-    
-            return (
-              <SocialIconContainer
-                key={option.name}
-                target="_blank"
-                rel="noopener"
-                data-a11y="false"
-                aria-label={`Link to ${option.name}`}
-                href={option.url}
-              >
-                <Icon fill={fill} />
-              </SocialIconContainer>
-            );
-          })}
-        </>
-      );
-    }
-
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
-
-# 
 
 **Reference:**
 
