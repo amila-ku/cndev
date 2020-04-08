@@ -1,157 +1,87 @@
 ---
 title: Why we built a company before building a product and why it worked
 date: 2017-04-30
-hero: /images/hero-6.jpg
-excerpt: Creating a new website for Hopper, one of the top 4 most downloaded travel apps in the U.S, along with Uber, Lyft.
+hero: "/images/hero-6.jpg"
+excerpt: Creating a new website for Hopper, one of the top 4 most downloaded travel
+  apps in the U.S, along with Uber, Lyft.
 timeToRead: 3
 authors:
-  - Thiago Costa
+- Thiago Costa
 
 ---
+![](https://miro.medium.com/max/794/1*7hJmglcnZMq9z8JC9TLS6Q.png =794x419)
 
-Hello, world! This is a demo post for `hugo-theme-novela`. Novela is built by the team at [Narative](https://narative.co), and built for everyone that loves the web.
+Deploying an application generally involves packaging as a container and creating kubernetes manifests for deployment, but even after being deployed someone would have to manage operations of the application. Kubernetes Operator is a way to package deploy and operate an application. Application in Kubernetes is managed using kubernetes api and kubectl, to efficiently manage stateful applications in kubernetes needs a way to extend the functionality of Kubernetes API cohesively. Operators are a runtime that manages these stateful applications by extending API functionality.
 
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
+There are multiple options available now to build an Operator, these frameworks can be grouped as below.
 
-In my experience, the challenges that growing companies struggle with rarely stem from a lack of good ideas. Good ideas are everywhere.
+**controller-runtime**
 
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
+* [kubebuilder](https://book.kubebuilder.io/)
+* [operator-sdk](https://coreos.com/operators/)
 
-Do they have the resources necessary to execute on their ideas? Or are they constantly under pressure to pluck only the lowest-hanging fruit through bare minimum means, while putting their greatest ambitions on the back-burner?
+[**meta-controller**](https://metacontroller.app/)
 
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
+[**rook-operatorkit**](https://github.com/rook/operator-kit)
 
-```js
-import React from "react";
-import { graphql, useStaticQuery } from "gatsby";
-import styled from "@emotion/styled";
+[**kopf**](https://github.com/zalando-incubator/kopf)
 
-import * as SocialIcons from "../../icons/social";
-import mediaqueries from "@styles/media";
+**client-go**
 
-const icons = {
-  dribbble: SocialIcons.DribbbleIcon,
-  linkedin: SocialIcons.LinkedinIcon,
-  twitter: SocialIcons.TwitterIcon,
-  facebook: SocialIcons.FacebookIcon,
-  instagram: SocialIcons.InstagramIcon,
-  github: SocialIcons.GithubIcon,
-};
+[**sample-controller**](https://github.com/kubernetes/sample-controller)
 
-const socialQuery = graphql`
-  {
-    allSite {
-      edges {
-        node {
-          siteMetadata {
-            social {
-              name
-              url
-            }
-          }
-        }
-      }
-    }
-  }
-`;
+**shell-operator**
 
-function SocialLinks({ fill = "#73737D" }: { fill: string }) {
-  const result = useStaticQuery(socialQuery);
-  const socialOptions = result.allSite.edges[0].node.siteMetadata.social;
+Out of all these options **shell-operator** is available as an option to execute event driven scripts in a kubernetes cluster. MetaController is a add on that can be installed on kubernetes to make it possible to write controllers as a script. Kopf is a python alternative option to using _Go._ But all these frameworks are to make controller building easier by hiding the kubernetes api, which is not great if you want to have full control in your controller.
 
-  return (
-    <>
-      {socialOptions.map(option => {
-        const Icon = icons[option.name];
+Sample Controller would be a good option if you know allout about controllers and operators and willing to do all the scaffolding on your own. This would easily end up as very time consuming and lot of head scratching moments.
 
-        return (
-          <SocialIconContainer
-            key={option.name}
-            target="_blank"
-            rel="noopener"
-            data-a11y="false"
-            aria-label={`Link to ${option.name}`}
-            href={option.url}
-          >
-            <Icon fill={fill} />
-          </SocialIconContainer>
-        );
-      })}
-    </>
-  );
-}
-```
+_Kubebuilder and Operator-sdk_ are based on the controller-runtime. But Operator-sdk also has helm and Ansible based alternative implementation options as well. Since Kubebuilder and and Operator-sdk are the frameworks that provides basic scaffolding for an operator so we can focus more on operator logic without loosing access to kubernetes apis.
 
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
+Creating a basic operator scaffolding is easy with both frameworks, First step is to generate the project structure.
 
-# This is a primary heading
+**Kubebuilder**
 
-Do they have the resources necessary to execute on their ideas? Or are they constantly under pressure to pluck only the lowest-hanging fruit through bare minimum means, while putting their greatest ambitions on the back-burner?
+Kubebuilder installation details is available [here](https://book.kubebuilder.io/quick-start.html#installation).
 
-> Blockquotes are very handy in email to emulate reply text.
-> This line is part of the same quote.
+Generating project
 
-But it takes more than good ideas to build and grow a business. It takes people to bring them into reality. Are those people collaborating and sharing their expertise, or are they in conflict and keeping it to themselves?
+    kubebuilder init --domain cndev.io
 
-> This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can _put_ **Markdown** into a blockquote.
+domain should be a valid domain name you own
 
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
+Add a custom resource api
 
-## This is a secondary heading
+    kubebuilder create api --group loadtests --version v1 --kind LocustLoadTest
 
-```jsx
-import React from "react";
-import { ThemeProvider } from "theme-ui";
-import theme from "./theme";
+group will be used as custom resource definition versioning along with version number, kind is used to set CRD kind.
 
-export default props => (
-  <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
-);
-```
+to build and install the operator
 
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
+    make installmake run
 
----
+**OperatorSDK**
 
-Hyphens
+installation instructions is available [here](https://github.com/operator-framework/operator-sdk/blob/master/doc/user/install-operator-sdk.md).
 
----
+generating a project
 
-Asterisks
+    operator-sdk new podset-operator --type=go --repo=/projects/
 
----
+Add a custom resource
 
-Underscores
+    operator-sdk add api --api-version=app.example.com/v1alpha1 --kind=PodSet
 
-These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself. These are the circumstances that suffocate creativity and destroy value in an organization. That’s why I knew that if I was going to start a company, our first product would have to be the company itself.
+build the operator
 
-Do they have the resources necessary to execute on their ideas? Or are they constantly under pressure to pluck only the lowest-hanging fruit through bare minimum means, while putting their greatest ambitions on the back-burner?
+    operator-sdk build quay.io/example/podset-operator
 
-Emphasis, aka italics, with _asterisks_ or _underscores_.
+So far this was only about how to create the generate operator structure and add new api scaffolding in a project. I will explore more on implementing some functionality using both the frameworks in my next article.
 
-Strong emphasis, aka bold, with **asterisks** or **underscores**.
+Reference:
 
-Combined emphasis with **asterisks and _underscores_**.
+[https://github.com/operator-framework/operator-sdk](https://github.com/operator-framework/operator-sdk "https://github.com/operator-framework/operator-sdk")
 
-Strikethrough uses two tildes. ~~Scratch this.~~
+[https://github.com/kubernetes-sigs/kubebuilder](https://github.com/kubernetes-sigs/kubebuilder "https://github.com/kubernetes-sigs/kubebuilder")
 
-1. First ordered list item
-2. Another item
-   ⋅⋅\* Unordered sub-list.
-3. Actual numbers don't matter, just that it's a number
-   ⋅⋅1. Ordered sub-list
-4. And another item.
-
-⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
-
-⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
-⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
-
-- Unordered list can use asterisks
-
-* Or minuses
-
-- Or pluses
+[https://www.youtube.com/watch?v=uf97lOApOv8&list=PLj6h78yzYM2PpmMAnvpvsnR4c27wJePh3&index=205](https://www.youtube.com/watch?v=uf97lOApOv8&list=PLj6h78yzYM2PpmMAnvpvsnR4c27wJePh3&index=205 "https://www.youtube.com/watch?v=uf97lOApOv8&list=PLj6h78yzYM2PpmMAnvpvsnR4c27wJePh3&index=205")
