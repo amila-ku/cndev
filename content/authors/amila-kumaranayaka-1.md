@@ -1,7 +1,6 @@
 +++
 avatar = "/images/IMG_20180630_164143.jpg"
 bio = ""
-draft = true
 featured = true
 title = "Amila Kumaranayaka"
 [[social]]
