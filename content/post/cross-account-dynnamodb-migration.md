@@ -20,3 +20,5 @@ Options considered:
 2. split read/writes across accounts while cross account replication is being done.
 3. Only implement cross account replication from old account to new.
 4. Use multiple application deployments with cross account replication.
+
+We ended up using the 4th option because it provided a way to migrate without any downtime without having to meddle with application code a lot. 
