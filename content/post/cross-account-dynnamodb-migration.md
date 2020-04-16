@@ -10,6 +10,8 @@ title = "Cross Account Dynnamodb Migration      "
 +++
 This article describes a solution used for migrating an application using DynamoDB from one account to another aws account. Application migrated is an API. Application was running on aws ec2 with auto scaling, and used Dynamodb as the database. According to a organization wide initiative to migrate all services in to kubernetes cluster was created in a new aws account.The end goal is to have the application, including all of its components, running in a Kubernetes cluster with the DynamoDB instance in a different AWS account.
 
+![](/images/DynamoDB Migration-Copy of Figure 1_ Migrate Micro-Service (1).png)
+
 Migration effort was complicated by the requirement to have the migration done without any downtime, there were lot of articles about doing a dynamodb migration with a downtime. Also there are multiple tools available to take a backup of dynamodb table and restore it to another table. But there wasn't much information on doing a migration without  application downtime. But since the application only needed to retain 3 weeks of data backup and restore part was not required at all.
 
 Existing dynamodb replication solutions like [dynamodb-replicator](https://github.com/mapbox/dynamodb-replicator), [dynamodb-cross-region-library](https://github.com/awslabs/dynamodb-cross-region-library) were evaluated. Since those could not be used for our requirement we came up with multiple options and these solutions were evaluated to find out the best option.
@@ -21,4 +23,11 @@ Options considered:
 3. Only implement cross account replication from old account to new.
 4. Use multiple application deployments with cross account replication.
 
-We ended up using the 4th option because it provided a way to migrate without any downtime without having to meddle with application code a lot. 
+We ended up using the 4th option because it provided a way to migrate without any downtime without having to meddle with application code a lot. Detailed steps of the selected option is described below.
+
+Step 1:
+
+![](/images/Blog-DynamoDB Migration-Figure 1_ Migrate Micro-Service.png)
+
+Step 2:  
+![](/images/Blog-DynamoDB Migration-Figure 2_ Switch Traffic To Kubernetes.png)
