@@ -29,5 +29,18 @@ Step 1:
 
 ![](/images/dynamodb-mig-step1.png)
 
-Step 2:  
+Step 2:
+
 ![](/images/dynamodb-mig-step2.png)
+
+Step 3:
+
+![](/images/dynamodb-mig-step3.png)
+
+Step 4:
+
+![](/images/dynamodb-mig-step4.png)
+
+Step 5:
+
+![](/images/dynamodb-mig-step5.png)
