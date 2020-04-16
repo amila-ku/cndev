@@ -2,7 +2,7 @@
 avatar = "/images/IMG_20180630_164143.jpg"
 bio = ""
 draft = true
-featured = false
+featured = true
 title = "Amila Kumaranayaka"
 [[social]]
 title = "Linkedin"
