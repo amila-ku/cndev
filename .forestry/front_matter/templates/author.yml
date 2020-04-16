@@ -44,4 +44,5 @@ fields:
   label: Featured Author
   description: Feature this author on the home page
 pages:
+- content/authors/amila-kumaranayaka-1.md
 - content/authors/amila-kumaranayaka.md
